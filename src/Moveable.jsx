@@ -4,7 +4,7 @@ import Moveable from "react-moveable";
 
 export default function MyComponent() {
   const [moveablesArr, setMoveablesArr] = useState([]);
-  const [currentIdx, setCurrentIdx] = useState(null);
+  const [currentId, setCurrentId] = useState(null);
   const moveableRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -14,7 +14,7 @@ export default function MyComponent() {
         return (
           <button
             onClick={() => {
-              setCurrentIdx(id);
+              setCurrentId(id);
             }}
             id={id}
           >
@@ -25,7 +25,8 @@ export default function MyComponent() {
         return (
           <div
             onClick={() => {
-              setCurrentIdx(id);
+              setCurrentId(id);
+              document.getElementById(id).focus();
             }}
             spellCheck="false"
             contentEditable
@@ -39,7 +40,7 @@ export default function MyComponent() {
           <div
             style={{ maxWidth: "100%" }}
             onClick={() => {
-              setCurrentIdx(id);
+              setCurrentId(id);
             }}
             id={id}
           >
@@ -61,7 +62,7 @@ export default function MyComponent() {
           child.contains(event.target)
         )
       ) {
-        setCurrentIdx(null); // Clicked outside of the container
+        setCurrentId(null); // Clicked outside of the container
       }
     };
 
@@ -82,6 +83,7 @@ export default function MyComponent() {
         }}
       >
         <div
+          style={{ cursor: "pointer" }}
           onClick={() => {
             setMoveablesArr([
               ...moveablesArr,
@@ -92,6 +94,7 @@ export default function MyComponent() {
           Add button
         </div>
         <div
+          style={{ cursor: "pointer" }}
           onClick={() => {
             setMoveablesArr([
               ...moveablesArr,
@@ -102,6 +105,7 @@ export default function MyComponent() {
           Text
         </div>
         <div
+          style={{ cursor: "pointer" }}
           onClick={() => {
             setMoveablesArr([
               ...moveablesArr,
@@ -129,7 +133,7 @@ export default function MyComponent() {
           <Moveable
             flushSync={flushSync}
             ref={moveableRef}
-            target={document.getElementById(currentIdx)}
+            target={document.getElementById(currentId)}
             draggable={true}
             throttleDrag={1}
             edgeDraggable={false}
@@ -140,10 +144,10 @@ export default function MyComponent() {
             throttleScale={0}
             snappable={true}
             bounds={{
-              left: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
+              left: "0%",
+              top: "0%",
+              right: "0%",
+              bottom: "0%",
               position: "css",
             }}
             onDrag={(e) => {
